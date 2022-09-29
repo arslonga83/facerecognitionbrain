@@ -5,6 +5,7 @@ import Logo from './components/logo/logo';
 import Rank from './components/rank/rank';
 import ImageLinkForm from './components/imageLinkForm/imageLinkForm';
 import FaceRecognition from './components/faceRecognition/faceRecognition';
+import Signin from './components/signin/signin';
 import ParticlesBg from 'particles-bg';
 import Clarifai from 'clarifai';
 
@@ -19,6 +20,7 @@ class App extends React.Component {
       input: '',
       imageURL: '',
       box: {},
+      route: 'signin',
     }
   }
 
@@ -59,6 +61,7 @@ class App extends React.Component {
     <div className="App">
       <ParticlesBg type="cobweb" bg={true} />
       <Navigation />
+      <Signin />
       <Logo />
       <Rank />
       <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit = {this.onButtonSubmit} />
