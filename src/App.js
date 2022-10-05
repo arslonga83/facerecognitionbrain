@@ -8,11 +8,9 @@ import FaceRecognition from './components/faceRecognition/faceRecognition';
 import Signin from './components/signin/signin';
 import Register from './components/register/register'
 import ParticlesBg from 'particles-bg';
-import Clarifai from 'clarifai';
 
-const app = new Clarifai.App({
-  apiKey: '94a47472f2ec45d39de77f86f4a3cd89'
- });
+
+
 
 const initialState = {
       input: '',
@@ -68,10 +66,14 @@ class App extends React.Component {
 
   onButtonSubmit = () => {
     this.setState({imageURL: this.state.input})
-    app.models
-      .predict(
-        Clarifai.FACE_DETECT_MODEL,
-        this.state.input)
+    fetch('http://localhost:3000/imageurl', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
+      .then(response => response.json()) 
       .then(response => {
         if (response) {
           fetch('http://localhost:3000/image', {
@@ -81,6 +83,7 @@ class App extends React.Component {
               id: this.state.user.id
             })
           })
+             
             .then(response => response.json())
             .then(count => {
               this.setState((Object.assign(this.state.user, { entries: count })))
